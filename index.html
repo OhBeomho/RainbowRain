@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rainbow Rain</title>
+		<style>
+			body,
+			html {
+				margin: 0;
+			}
+
+			canvas {
+				display: block;
+			}
+
+			.container {
+				position: absolute;
+				padding: 10px;
+				color: white;
+			}
+
+			.container.top {
+				top: 0;
+			}
+
+			.container.left {
+				left: 0;
+			}
+
+			.container.bottom {
+				bottom: 0;
+			}
+
+			.container.right {
+				right: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<div class="container top left">
+			Rain width: <input type="number" id="rainWidth" value="3" max="100" /><br />
+			Rain height: <input type="number" id="rainHeight" value="30" max="100" /><br />
+			Rain velocity: <input type="number" id="rainVelocity" value="25" max="100" /><br />
+			Rain per frame: <input type="number" id="rainPerFrame" value="1" max="10" /><br />
+			Tail Effect <input type="checkbox" id="tailEffect" checked /><br />
+			<button type="button" id="reset">Reset Settings</button><br /><br />
+			<span style="color: rgb(227, 227, 227); font-size: 13px">
+				Source on <a href="https://github.com/OhBeomho/RainbowRain" target="_blank">Github</a>.<br /><br />
+			</span>
+		</div>
+		<div class="container top right">
+			Used pixi.js to this website.<br />
+			License: MIT License<br />
+			Link: <a href="https://pixijs.com" target="_blank">pixijs.com</a>
+		</div>
+
+		<script src="./pixi.js"></script>
+		<script src="./script.js"></script>
+	</body>
+</html>
