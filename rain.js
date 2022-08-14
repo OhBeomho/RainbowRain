@@ -9,27 +9,27 @@ const rainWidthInput = document.getElementById('rainWidth');
 const rainHeightInput = document.getElementById('rainHeight');
 const rainVelocityInput = document.getElementById('rainVelocity');
 const rainPerFrameInput = document.getElementById('rainPerFrame');
-const tailEffectToggle = document.getElementById('tailEffect');
+const trailEffectToggle = document.getElementById('trailEffect');
 const resetButton = document.getElementById('reset');
 
 let rainWidth = rainWidthInput.value;
 let rainHeight = rainHeightInput.value;
 let rainVelocity = rainVelocityInput.value;
 let rainPerFrame = rainPerFrameInput.value;
-let tailEffect = tailEffectToggle.checked;
+let trailEffect = trailEffectToggle.checked;
 
 resetButton.addEventListener('click', () => {
 	rainWidth = 3;
 	rainHeight = 30;
 	rainVelocity = 25;
 	rainPerFrame = 2;
-	tailEffect = true;
+	trailEffect = true;
 
 	rainWidthInput.value = 3;
 	rainHeightInput.value = 30;
 	rainVelocityInput.value = 25;
 	rainPerFrameInput.value = 2;
-	tailEffectToggle.checked = true;
+	trailEffectToggle.checked = true;
 });
 
 rainWidthInput.addEventListener('change', () => {
@@ -48,8 +48,8 @@ rainPerFrameInput.addEventListener('change', () => {
 	rainPerFrame = parseInt(rainPerFrameInput.value);
 });
 
-tailEffectToggle.addEventListener('change', () => {
-	tailEffect = tailEffectToggle.checked;
+trailEffectToggle.addEventListener('change', () => {
+	trailEffect = trailEffectToggle.checked;
 });
 
 const g = new PIXI.Graphics();
@@ -66,7 +66,7 @@ class Rain {
 	}
 
 	draw() {
-		for (let i = 5; i > (tailEffect ? 0 : 4); i--) {
+		for (let i = 5; i > (trailEffect ? 0 : 4); i--) {
 			g.beginFill(this.color, i / 5);
 			g.drawRect(
 				this.x,
