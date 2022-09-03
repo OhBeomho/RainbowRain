@@ -1,9 +1,8 @@
 const canvas = document.getElementById('canvas');
-const app = new PIXI.Application({
-	width: window.innerWidth,
-	height: window.innerHeight,
-	view: canvas
-});
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 const rainWidthInput = document.getElementById('rainWidth');
 const rainHeightInput = document.getElementById('rainHeight');
@@ -12,22 +11,22 @@ const rainPerFrameInput = document.getElementById('rainPerFrame');
 const trailEffectToggle = document.getElementById('trailEffect');
 const resetButton = document.getElementById('reset');
 
-let rainWidth = rainWidthInput.value;
-let rainHeight = rainHeightInput.value;
-let rainVelocity = rainVelocityInput.value;
-let rainPerFrame = rainPerFrameInput.value;
+let rainWidth = parseInt(rainWidthInput.value);
+let rainHeight = parseInt(rainHeightInput.value);
+let rainVelocity = parseInt(rainVelocityInput.value);
+let rainPerFrame = parseInt(rainPerFrameInput.value);
 let trailEffect = trailEffectToggle.checked;
 
 resetButton.addEventListener('click', () => {
 	rainWidth = 3;
 	rainHeight = 30;
-	rainVelocity = 25;
+	rainVelocity = 15;
 	rainPerFrame = 2;
 	trailEffect = true;
 
 	rainWidthInput.value = 3;
 	rainHeightInput.value = 30;
-	rainVelocityInput.value = 25;
+	rainVelocityInput.value = 15;
 	rainPerFrameInput.value = 2;
 	trailEffectToggle.checked = true;
 });
@@ -52,9 +51,6 @@ trailEffectToggle.addEventListener('change', () => {
 	trailEffect = trailEffectToggle.checked;
 });
 
-const g = new PIXI.Graphics();
-app.stage.addChild(g);
-
 class Rain {
 	constructor(x, y, width, height, color) {
 		this.x = x;
@@ -62,41 +58,41 @@ class Rain {
 		this.width = width;
 		this.height = height;
 		this.color = color;
-		this.velocity = 0;
+		this.velocity = rainVelocity;
 	}
 
 	draw() {
-		for (let i = 5; i > (trailEffect ? 0 : 4); i--) {
-			g.beginFill(this.color, i / 5);
-			g.drawRect(
-				this.x,
-				this.y + i * this.velocity,
-				this.width,
-				i === 5 ? this.height : this.height * (this.velocity / 15)
-			);
-			g.endFill();
-		}
+		ctx.fillStyle = this.color;
+		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 
 	update() {
-		this.velocity = rainVelocity * ((this.y + 250) / 600);
+		this.velocity += 0.4;
 		this.y += this.velocity;
 	}
 }
 
 const rains = [];
+let handle;
 
-const animate = () => {
-	g.clear();
+function animate() {
+	if (trailEffect) {
+		ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+	} else {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
 
 	for (let i = 0; i < rainPerFrame; i++) {
 		rains.push(
 			new Rain(
-				Math.floor(Math.random() * app.renderer.width),
-				-200,
+				Math.floor(Math.random() * canvas.width),
+				-rainHeight,
 				rainWidth,
 				rainHeight,
-				Math.floor(Math.random() * 0xffffff)
+				`rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(
+					Math.random() * 255
+				)})`
 			)
 		);
 	}
@@ -105,12 +101,17 @@ const animate = () => {
 		rain.draw();
 		rain.update();
 
-		if (rain.y > app.renderer.height + 200) {
+		if (rain.y > canvas.height + 100) {
 			rains.splice(rains.indexOf(rain), 1);
 		}
 	}
-};
 
-app.ticker.add(animate);
+	handle = window.requestAnimationFrame(animate);
+}
 
-window.addEventListener('resize', () => app.renderer.resize(window.innerWidth, window.innerHeight));
+handle = window.requestAnimationFrame(animate);
+
+window.addEventListener('resize', () => {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+});

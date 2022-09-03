@@ -13,6 +13,7 @@
 
 			canvas {
 				display: block;
+				background-color: black;
 			}
 
 			.container {
@@ -43,7 +44,7 @@
 		<div class="container top left">
 			Rain width: <input type="number" id="rainWidth" value="3" max="100" /><br />
 			Rain height: <input type="number" id="rainHeight" value="30" max="100" /><br />
-			Rain velocity: <input type="number" id="rainVelocity" value="25" max="100" /><br />
+			Rain velocity: <input type="number" id="rainVelocity" value="15" max="100" /><br />
 			Rain per frame: <input type="number" id="rainPerFrame" value="2" max="10" /><br />
 			Trail Effect <input type="checkbox" id="trailEffect" checked /><br />
 			<button type="button" id="reset">Reset Settings</button><br /><br />
@@ -51,13 +52,7 @@
 				Source on <a href="https://github.com/OhBeomho/RainbowRain" target="_blank">Github</a>.<br /><br />
 			</span>
 		</div>
-		<div class="container bottom right">
-			Used pixi.js to this website.<br />
-			License: MIT License<br />
-			Link: <a href="https://pixijs.com" target="_blank">pixijs.com</a>
-		</div>
 
-		<script src="https://pixijs.download/v6.5.1/pixi.js"></script>
 		<script src="./rain.js"></script>
 	</body>
 </html>
